@@ -5,6 +5,8 @@ import io.r2dbc.spi.ConnectionFactories;
 import io.r2dbc.spi.ConnectionFactory;
 import io.r2dbc.spi.ConnectionFactoryOptions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.r2dbc.R2dbcAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.r2dbc.config.AbstractR2dbcConfiguration;
 import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories;
@@ -16,6 +18,7 @@ import static io.r2dbc.spi.ConnectionFactoryOptions.*;
 
 @Configuration
 @EnableR2dbcRepositories
+@EnableAutoConfiguration(exclude = R2dbcAutoConfiguration.class)
 public class R2dbcConfig extends AbstractR2dbcConfiguration {
 
     private final CustomR2dbcProperties r2dbcProperties;
@@ -28,7 +31,7 @@ public class R2dbcConfig extends AbstractR2dbcConfiguration {
     @Override
     public ConnectionFactory connectionFactory() {
         ConnectionFactoryOptions options = ConnectionFactoryOptions.builder()
-                .option(DRIVER, r2dbcProperties.getName())
+                .option(DRIVER, r2dbcProperties.getDriver())
                 .option(HOST, r2dbcProperties.getUrl())
                 .option(USER, r2dbcProperties.getUsername())
                 .option(PORT, r2dbcProperties.getPort())
