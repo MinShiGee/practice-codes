@@ -7,6 +7,8 @@ import org.springframework.data.relational.core.mapping.Table;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.TimeZone;
 
 @Table("authinfo")
 @Data
@@ -34,7 +36,7 @@ public class AuthInfo {
 
     @Column("created_date")
     @Builder.Default
-    Date createdDate = Date.valueOf(LocalDate.now());
+    LocalDate createdDate = LocalDate.now(ZoneId.of("Asia/Seoul"));
 
     @Column("authorities")
     @Builder.Default
@@ -52,6 +54,13 @@ public class AuthInfo {
     @Data
     public static class Request {
         String userEmail;
+        String userName;
+        String userPassword;
+    }
+
+    @Builder
+    @Data
+    public static class Update {
         String userName;
         String userPassword;
     }

@@ -3,7 +3,6 @@ package com.minshigee.authserver.domains.authinfo;
 import com.minshigee.authserver.cores.exception.ErrorCode;
 import com.minshigee.authserver.domains.daos.AuthInfoDAO;
 import com.minshigee.authserver.domains.daos.entities.AuthInfo;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,20 +48,23 @@ public class AuthInfoService {
         return getAuthInfoByUserEmail(authInfoDTO.getUserEmail())
                 .switchIfEmpty(Mono.error(ErrorCode.AUTHINFO_NOT_FOUND.build()))
                 .doOnNext(authInfo -> {
-                    if(authInfoDTO.getUserEmail() != null)
-                        authInfo.setUserEmail(authInfoDTO.getUserEmail());
                     if(authInfoDTO.getUserName() != null)
                         authInfo.setUserName(authInfoDTO.getUserName());
                     if(authInfoDTO.getUserPassword() != null)
                         authInfo.setUserPassword(authInfoDTO.getUserPassword());
                 })
-                .doOnNext(authInfoDAO::save)
+                .flatMap(authInfoDAO::save)
                 .timeout(timeOutSecond);
     }
 
     @Transactional
     protected Mono<Void> deleteAuthInfo(Long id) {
         return authInfoDAO.deleteById(id)
+                .timeout(timeOutSecond);
+    }
+    @Transactional
+    protected Mono<Void> deleteAuthInfo(String userEmail) {
+        return authInfoDAO.deleteAuthInfoByUserEmail(userEmail)
                 .timeout(timeOutSecond);
     }
 

@@ -18,11 +18,12 @@ import java.lang.annotation.*;
 @TestPropertySource(locations = "classpath:secret.properties") // Property 정보는 secret.properties에 저장되어있음.
 @DataR2dbcTest(excludeAutoConfiguration = R2dbcAutoConfiguration.class) // Application Context에 property 2개가 잡히는 문제를 해결하기 위함.
 @EnableR2dbcRepositories(basePackages = {"com.minshigee.authserver.*"}) // R2dbc Repo를 Test에 사용하기 위해 해줌
-@EnableConfigurationProperties(value = {CustomR2dbcProperties.class})
+@EnableConfigurationProperties()
 @ContextConfiguration()
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface CustomDataR2dbcTest {
     Class<?>[] classes() default {R2dbcConfig.class};
+    Class<?>[] value() default {};
 }
