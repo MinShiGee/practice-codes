@@ -9,8 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import reactor.test.StepVerifier;
 
-import java.time.Duration;
-
 @CustomDataR2dbcTest(
         value = {CustomR2dbcProperties.class},
         classes = {
