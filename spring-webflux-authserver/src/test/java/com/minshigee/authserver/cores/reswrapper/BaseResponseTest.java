@@ -13,7 +13,6 @@ public class BaseResponseTest {
                 .build();
         Assertions.assertNotNull(res.toEntity().getBody());
     }
-
 }
 
 class TestClass {

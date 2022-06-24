@@ -3,6 +3,7 @@ package com.minshigee.authserver.domains.authinfo;
 import com.minshigee.authserver.cores.r2dbc.annotations.CustomDataR2dbcTest;
 import com.minshigee.authserver.cores.r2dbc.R2dbcConfig;
 import com.minshigee.authserver.cores.r2dbc.properties.CustomR2dbcProperties;
+import com.minshigee.authserver.domains.authinfo.interfaces.AuthInfoRepository;
 import com.minshigee.authserver.domains.daos.entities.AuthInfo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -13,17 +14,17 @@ import reactor.test.StepVerifier;
         value = {CustomR2dbcProperties.class},
         classes = {
                 R2dbcConfig.class,
-                AuthInfoService.class
+                AuthInfoRepositoryImpl.class
         }
 )
-public class AuthInfoServiceTest {
+public class AuthInfoRepositoryImplTest {
 
     @Autowired
-    public AuthInfoService authInfoService;
+    public AuthInfoRepository authInfoRepositoryImpl;
 
     @Test
     public void injectAuthInfoServiceTest() {
-        Assertions.assertNotNull(authInfoService);
+        Assertions.assertNotNull(authInfoRepositoryImpl);
     }
 
     @Test
@@ -36,14 +37,14 @@ public class AuthInfoServiceTest {
 
     public void createAuthInfoTest() {
         AuthInfo.Request reqDTO = getAuthInfoRequestDto();
-        StepVerifier.create(authInfoService.createAuthInfo(reqDTO))
+        StepVerifier.create(authInfoRepositoryImpl.createAuthInfo(reqDTO))
                 .assertNext(Assertions::assertNotNull)
                 .verifyComplete();
     }
 
     public void getAuthInfoTest() {
         AuthInfo.Request reqDTO = getAuthInfoRequestDto();
-        StepVerifier.create(authInfoService.getAuthInfoByUserEmail(reqDTO.getUserEmail()))
+        StepVerifier.create(authInfoRepositoryImpl.getAuthInfoByUserEmail(reqDTO.getUserEmail()))
                 .assertNext(authInfo -> Assertions.assertEquals(authInfo.getUserName(),reqDTO.getUserName()))
                 .verifyComplete();
     }
@@ -52,7 +53,7 @@ public class AuthInfoServiceTest {
         AuthInfo.Request reqDTO = getAuthInfoRequestDto();
         reqDTO.setUserName("ttest");
         reqDTO.setUserPassword("ppassword");
-        StepVerifier.create(authInfoService.updateAuthInfo(reqDTO))
+        StepVerifier.create(authInfoRepositoryImpl.updateAuthInfo(reqDTO))
                 .assertNext(authInfo -> {
                     Assertions.assertEquals(authInfo.getUserName(),"ttest");
                     Assertions.assertEquals(authInfo.getUserPassword(),"ppassword");
@@ -62,7 +63,7 @@ public class AuthInfoServiceTest {
 
     public void deleteAuthInfoTest() {
         AuthInfo.Request reqDTO = getAuthInfoRequestDto();
-        StepVerifier.create(authInfoService.deleteAuthInfo(reqDTO.getUserEmail()))
+        StepVerifier.create(authInfoRepositoryImpl.deleteAuthInfo(reqDTO.getUserEmail()))
                 .verifyComplete();
     }
 

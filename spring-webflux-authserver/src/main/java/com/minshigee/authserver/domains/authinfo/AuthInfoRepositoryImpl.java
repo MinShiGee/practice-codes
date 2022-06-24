@@ -1,38 +1,35 @@
 package com.minshigee.authserver.domains.authinfo;
 
 import com.minshigee.authserver.cores.exception.ErrorCode;
+import com.minshigee.authserver.domains.authinfo.interfaces.AuthInfoRepository;
 import com.minshigee.authserver.domains.daos.AuthInfoDAO;
 import com.minshigee.authserver.domains.daos.entities.AuthInfo;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 
 import java.time.Duration;
 
-@Service
+@Repository
 @RequiredArgsConstructor
-public class AuthInfoService {
+public class AuthInfoRepositoryImpl implements AuthInfoRepository {
 
     final AuthInfoDAO authInfoDAO;
     private final Duration timeOutSecond = Duration.ofSeconds(3L);
 
-    public Mono<AuthInfo> registerAuthInfo(AuthInfo.Request authInfoDTO) {
-        return createAuthInfo(authInfoDTO);
-    }
-
-    protected Mono<AuthInfo> getAuthInfoById(Long id) {
+    public Mono<AuthInfo> getAuthInfoById(Long id) {
         return authInfoDAO.findById(id)
                 .timeout(timeOutSecond);
     }
 
-    protected Mono<AuthInfo> getAuthInfoByUserEmail(String userEmail) {
+    public Mono<AuthInfo> getAuthInfoByUserEmail(String userEmail) {
         return authInfoDAO.findAuthInfoByUserEmail(userEmail)
                 .timeout(timeOutSecond);
     }
 
     @Transactional
-    protected Mono<AuthInfo> createAuthInfo(AuthInfo.Request authInfoDTO) {
+    public Mono<AuthInfo> createAuthInfo(AuthInfo.Request authInfoDTO) {
         return getAuthInfoByUserEmail(authInfoDTO.getUserEmail())
                 .switchIfEmpty(Mono.just(AuthInfo.builder()
                         .userName(authInfoDTO.getUserName())
@@ -44,7 +41,7 @@ public class AuthInfoService {
     }
 
     @Transactional
-    protected Mono<AuthInfo> updateAuthInfo(AuthInfo.Request authInfoDTO) {
+    public Mono<AuthInfo> updateAuthInfo(AuthInfo.Request authInfoDTO) {
         return getAuthInfoByUserEmail(authInfoDTO.getUserEmail())
                 .switchIfEmpty(Mono.error(ErrorCode.AUTHINFO_NOT_FOUND.build()))
                 .doOnNext(authInfo -> {
@@ -58,12 +55,12 @@ public class AuthInfoService {
     }
 
     @Transactional
-    protected Mono<Void> deleteAuthInfo(Long id) {
+    public Mono<Void> deleteAuthInfo(Long id) {
         return authInfoDAO.deleteById(id)
                 .timeout(timeOutSecond);
     }
     @Transactional
-    protected Mono<Void> deleteAuthInfo(String userEmail) {
+    public Mono<Void> deleteAuthInfo(String userEmail) {
         return authInfoDAO.deleteAuthInfoByUserEmail(userEmail)
                 .timeout(timeOutSecond);
     }

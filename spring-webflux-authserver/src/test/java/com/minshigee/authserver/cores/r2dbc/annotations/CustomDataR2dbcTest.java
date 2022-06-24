@@ -1,8 +1,6 @@
 package com.minshigee.authserver.cores.r2dbc.annotations;
 
 import com.minshigee.authserver.cores.r2dbc.R2dbcConfig;
-import com.minshigee.authserver.cores.r2dbc.properties.CustomR2dbcProperties;
-import com.minshigee.authserver.domains.authinfo.AuthInfoService;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.autoconfigure.r2dbc.R2dbcAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
