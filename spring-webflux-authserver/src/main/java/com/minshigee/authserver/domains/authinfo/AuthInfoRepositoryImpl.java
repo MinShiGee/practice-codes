@@ -2,8 +2,8 @@ package com.minshigee.authserver.domains.authinfo;
 
 import com.minshigee.authserver.cores.exception.ErrorCode;
 import com.minshigee.authserver.domains.authinfo.interfaces.AuthInfoRepository;
-import com.minshigee.authserver.domains.daos.AuthInfoDAO;
-import com.minshigee.authserver.domains.daos.entities.AuthInfo;
+import com.minshigee.authserver.daos.AuthInfoDAO;
+import com.minshigee.authserver.daos.entities.AuthInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;

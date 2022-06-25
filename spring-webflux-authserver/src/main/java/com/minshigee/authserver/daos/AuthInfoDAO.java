@@ -1,6 +1,6 @@
-package com.minshigee.authserver.domains.daos;
+package com.minshigee.authserver.daos;
 
-import com.minshigee.authserver.domains.daos.entities.AuthInfo;
+import com.minshigee.authserver.daos.entities.AuthInfo;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;

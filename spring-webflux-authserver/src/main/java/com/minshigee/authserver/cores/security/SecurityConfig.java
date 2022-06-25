@@ -1,8 +1,8 @@
 package com.minshigee.authserver.cores.security;
 
-import com.minshigee.authserver.cores.security.filters.JwtAuthenticationFilter;
+import com.minshigee.authserver.domains.login.filters.JwtAuthenticationFilter;
 import com.minshigee.authserver.cores.security.properties.CorsProperties;
-import com.minshigee.authserver.cores.security.resolvers.JwtResolver;
+import com.minshigee.authserver.domains.login.resolvers.JwtResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;

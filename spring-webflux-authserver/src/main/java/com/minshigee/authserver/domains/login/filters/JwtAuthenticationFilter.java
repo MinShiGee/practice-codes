@@ -1,6 +1,6 @@
-package com.minshigee.authserver.cores.security.filters;
+package com.minshigee.authserver.domains.login.filters;
 
-import com.minshigee.authserver.cores.security.resolvers.JwtResolver;
+import com.minshigee.authserver.domains.login.resolvers.JwtResolver;
 import lombok.Builder;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.security.core.Authentication;

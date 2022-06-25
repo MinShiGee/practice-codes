@@ -6,6 +6,11 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 public enum ErrorCode {
 
+    //OAuth2
+    NO_AVAILABLE_PROVIDER_LOGIN(new GlobalException(HttpStatus.BAD_REQUEST, "지원하지 않는 방식의 로그인입니다.")),
+    CANT_LOGIN_OAUTH2(new GlobalException(HttpStatus.BAD_REQUEST, "외부 로그인을 진행할 수 없습니다.")),
+    CANT_SIGN_UP_OAUTH2(new GlobalException(HttpStatus.BAD_REQUEST, "OAuth2 사용자 정보를 생성하는데 실패했습니다.")),
+
     //JWT TOKEN ERROR
     ACCESS_TOKEN_ERROR(new GlobalException(HttpStatus.BAD_REQUEST, "액세스 토근이 유효하지 않습니다.")),
     REFRESH_TOKEN_ERROR(new GlobalException(HttpStatus.BAD_REQUEST, "리프레시 토근이 유효하지 않습니다.")),

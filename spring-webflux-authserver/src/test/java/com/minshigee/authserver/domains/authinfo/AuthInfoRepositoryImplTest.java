@@ -4,7 +4,7 @@ import com.minshigee.authserver.cores.r2dbc.annotations.CustomDataR2dbcTest;
 import com.minshigee.authserver.cores.r2dbc.R2dbcConfig;
 import com.minshigee.authserver.cores.r2dbc.properties.CustomR2dbcProperties;
 import com.minshigee.authserver.domains.authinfo.interfaces.AuthInfoRepository;
-import com.minshigee.authserver.domains.daos.entities.AuthInfo;
+import com.minshigee.authserver.daos.entities.AuthInfo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

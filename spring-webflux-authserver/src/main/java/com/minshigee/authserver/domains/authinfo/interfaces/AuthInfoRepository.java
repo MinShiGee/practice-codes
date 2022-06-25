@@ -1,6 +1,6 @@
 package com.minshigee.authserver.domains.authinfo.interfaces;
 
-import com.minshigee.authserver.domains.daos.entities.AuthInfo;
+import com.minshigee.authserver.daos.entities.AuthInfo;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 

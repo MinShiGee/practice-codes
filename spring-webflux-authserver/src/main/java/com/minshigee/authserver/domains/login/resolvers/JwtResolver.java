@@ -1,6 +1,7 @@
-package com.minshigee.authserver.cores.security.resolvers;
+package com.minshigee.authserver.domains.login.resolvers;
 
-import com.minshigee.authserver.cores.security.filters.JwtAuthenticationFilter;
+import com.minshigee.authserver.daos.entities.AuthInfo;
+import com.minshigee.authserver.domains.login.entities.LoginInfo;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -55,24 +56,25 @@ public class JwtResolver {
         }
     }
 
-    /*public String generateToken(AuthInfo authInfo) {
+    public String generateToken(LoginInfo loginInfo) {
         Map<String, Object> claims = new HashMap<>();
 
-        List<Role> roles = authInfo.extractAuthorities(); //TODO 권한 부여 코드 작성
+        //List<Role> roles = authInfo.extractAuthorities(); //TODO 권한 부여 코드 작성
 
-        claims.put("role", roles);
-        claims.put("email", authInfo.getUserEmail());
-        return doGenerateToken(claims, authInfo.getId());
-    }*/
+        //claims.put("role", roles);
+        claims.put("account", loginInfo.getAccountId());
+        claims.put("provider", loginInfo.getProvider());
+        return doGenerateToken(claims, loginInfo.getAuthInfoId());
+    }
 
-    private String doGenerateToken(Map<String, Object> claims, Long userCode) {
+    private String doGenerateToken(Map<String, Object> claims, Long authInfoId) {
         Long expirationTimeLong = Long.parseLong(expirationTime); //in second
         final Date createdDate = new Date();
         final Date expirationDate = new Date(createdDate.getTime() + expirationTimeLong * 1000);
 
         return Jwts.builder()
                 .setClaims(claims)
-                .setSubject(String.valueOf(userCode))
+                .setSubject(String.valueOf(authInfoId))
                 .setIssuedAt(createdDate)
                 .setExpiration(expirationDate)
                 .signWith(key)
