@@ -1,6 +1,6 @@
 package com.minshigee.authserver.domains.login.oauth2;
 
-import com.minshigee.authserver.cores.exception.ErrorCode;
+import com.minshigee.authserver.dependencies.exception.ErrorCode;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcReactiveOAuth2UserService;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;
 import org.springframework.security.oauth2.client.userinfo.ReactiveOAuth2UserService;

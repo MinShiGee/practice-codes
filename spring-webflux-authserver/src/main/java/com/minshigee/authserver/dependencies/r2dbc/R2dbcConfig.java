@@ -1,12 +1,9 @@
-package com.minshigee.authserver.cores.r2dbc;
+package com.minshigee.authserver.dependencies.r2dbc;
 
-import com.minshigee.authserver.cores.r2dbc.properties.CustomR2dbcProperties;
+import com.minshigee.authserver.dependencies.r2dbc.properties.CustomR2dbcProperties;
 import io.r2dbc.spi.ConnectionFactories;
 import io.r2dbc.spi.ConnectionFactory;
 import io.r2dbc.spi.ConnectionFactoryOptions;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.data.r2dbc.R2dbcDataAutoConfiguration;
-import org.springframework.boot.autoconfigure.r2dbc.R2dbcAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -73,14 +70,15 @@ public class R2dbcConfig extends AbstractR2dbcConfiguration {
         return initializer;
     }
 
-    class CustomConnectionFactoryInitializer extends ConnectionFactoryInitializer {
+    static class CustomConnectionFactoryInitializer extends ConnectionFactoryInitializer {
         @Override
         public void afterPropertiesSet() {
             try {
                 super.afterPropertiesSet();
+                System.out.println("tables created..");
             }
             catch (Exception e) {
-                System.err.println(e.getMessage());
+                System.out.println("tables not created..");
             }
         }
     }

@@ -8,4 +8,6 @@ import reactor.core.publisher.Mono;
 public interface LoginService {
     Mono<LoginInfo> registerAccount(LocalAccount account);
     Mono<LoginInfo> registerAccount(OAuth2Account account);
+    Mono<LoginInfo> registerAccount(LocalAccount.SignupRequestDTO reqDto);
+    Mono<LoginInfo> signinLocalAccount(LocalAccount.SigninRequestDTO reqDto);
 }

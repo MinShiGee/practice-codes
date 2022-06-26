@@ -1,4 +1,4 @@
-package com.minshigee.authserver.cores.reswrapper;
+package com.minshigee.authserver.dependencies.reswrapper;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

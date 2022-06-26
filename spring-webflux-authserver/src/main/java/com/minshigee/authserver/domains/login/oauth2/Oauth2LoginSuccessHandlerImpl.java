@@ -1,13 +1,11 @@
 package com.minshigee.authserver.domains.login.oauth2;
 
-import com.minshigee.authserver.cores.exception.ErrorCode;
+import com.minshigee.authserver.dependencies.exception.ErrorCode;
 import com.minshigee.authserver.domains.login.interfaces.LoginService;
 import com.minshigee.authserver.domains.login.resolvers.JwtResolver;
 import com.minshigee.authserver.domains.login.resolvers.OAuth2AccountResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.web.server.DefaultServerRedirectStrategy;
 import org.springframework.security.web.server.ServerRedirectStrategy;
 import org.springframework.security.web.server.WebFilterExchange;

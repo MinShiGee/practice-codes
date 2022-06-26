@@ -1,6 +1,6 @@
-package com.minshigee.authserver.cores.reswrapper;
+package com.minshigee.authserver.dependencies.reswrapper;
 
-import com.minshigee.authserver.cores.exception.ErrorCode;
+import com.minshigee.authserver.dependencies.exception.ErrorCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

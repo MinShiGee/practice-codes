@@ -34,4 +34,30 @@ public class LocalAccount implements IAccount {
     public Long getAuthInfoCode() {
         return getFk_AuthInfoes();
     }
+
+    @Data
+    @Builder
+    public static class SignupResponse {
+        String userEmail;
+    }
+
+    @Data
+    @Builder
+    public static class SignupRequestDTO {
+        String userEmail;
+        String userPassword;
+    }
+
+    @Data
+    @Builder
+    public static class SigninResponse {
+        String userEmail;
+    }
+
+    @Data
+    @Builder
+    public static class SigninRequestDTO {
+        String userEmail;
+        String userPassword;
+    }
 }

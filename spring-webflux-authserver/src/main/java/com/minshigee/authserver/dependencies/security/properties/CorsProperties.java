@@ -1,4 +1,4 @@
-package com.minshigee.authserver.cores.security.properties;
+package com.minshigee.authserver.dependencies.security.properties;
 
 import lombok.Getter;
 import lombok.Setter;

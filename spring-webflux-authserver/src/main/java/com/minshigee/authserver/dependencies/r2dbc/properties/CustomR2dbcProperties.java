@@ -1,4 +1,4 @@
-package com.minshigee.authserver.cores.r2dbc.properties;
+package com.minshigee.authserver.dependencies.r2dbc.properties;
 
 import lombok.Getter;
 import lombok.Setter;

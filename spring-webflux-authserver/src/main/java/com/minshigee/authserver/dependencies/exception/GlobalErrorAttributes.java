@@ -1,4 +1,4 @@
-package com.minshigee.authserver.cores.exception;
+package com.minshigee.authserver.dependencies.exception;
 
 import org.springframework.boot.web.error.ErrorAttributeOptions;
 import org.springframework.boot.web.reactive.error.DefaultErrorAttributes;

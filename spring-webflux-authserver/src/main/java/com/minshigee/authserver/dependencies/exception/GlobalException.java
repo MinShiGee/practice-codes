@@ -1,4 +1,4 @@
-package com.minshigee.authserver.cores.exception;
+package com.minshigee.authserver.dependencies.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;

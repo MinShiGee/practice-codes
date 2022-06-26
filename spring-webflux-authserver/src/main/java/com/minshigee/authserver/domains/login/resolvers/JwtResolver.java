@@ -19,6 +19,7 @@ import java.util.*;
 
 @Component
 public class JwtResolver {
+
     @Value("${spring.project.jjwt.secretkey}")
     private String secretKey;
     @Value("${spring.project.jjwt.expiration}")

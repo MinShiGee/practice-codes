@@ -1,11 +1,10 @@
 package com.minshigee.authserver.domains.login.resolvers;
 
-import com.minshigee.authserver.cores.exception.ErrorCode;
+import com.minshigee.authserver.dependencies.exception.ErrorCode;
 import com.minshigee.authserver.daos.entities.OAuth2Account;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Component;
 
 @Component

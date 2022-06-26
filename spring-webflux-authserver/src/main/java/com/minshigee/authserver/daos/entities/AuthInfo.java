@@ -17,9 +17,6 @@ public class AuthInfo {
     @Id
     Long id;
 
-    @Column("user_name")
-    String userName;
-
     @Column("user_email")
     String userEmail;
 
