@@ -2,11 +2,13 @@ package com.minshigee.authserver.dependencies.security;
 
 import com.minshigee.authserver.domains.auth.filters.JwtAuthenticationFilter;
 import com.minshigee.authserver.dependencies.security.properties.CorsProperties;
+import com.minshigee.authserver.domains.auth.oauth2.Oauth2LoginSuccessHandlerImpl;
 import com.minshigee.authserver.domains.auth.resolvers.JwtResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
@@ -34,6 +36,7 @@ public class SecurityConfig {
 
     private final CorsProperties corsProperties;
     private final JwtResolver jwtResolver;
+    private final Oauth2LoginSuccessHandlerImpl oauth2LoginSuccessHandler;
 
     @Bean
     SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
@@ -42,11 +45,10 @@ public class SecurityConfig {
         http.securityContextRepository(NoOpServerSecurityContextRepository.getInstance());
 
         //TODO OAuth2Login
-        /*http.oauth2Login(Customizer.withDefaults())
+        http.oauth2Login(Customizer.withDefaults())
                 .oauth2Login(oAuth2LoginSpec -> {
-                    //oAuth2LoginSpec.authenticationSuccessHandler(customOauth2LoginSuccessHandler);
-                    //oAuth2LoginSpec.authenticationFailureHandler(customAuthenticationFailureHandler);
-                });*/
+                    oAuth2LoginSpec.authenticationSuccessHandler(oauth2LoginSuccessHandler);
+                });
 
         //TODO ADD CUSTOM Filter
         http.addFilterBefore(JwtAuthenticationFilter.builder().jwtResolver(jwtResolver).build(),
@@ -58,7 +60,7 @@ public class SecurityConfig {
         http.logout().disable();
 
         return http.authorizeExchange()
-                .pathMatchers("/api", "/login/**", "/authorize/**", "/webjars/swagger-ui/**", "/v3/api-docs/**","/api/signup","/api/signin").permitAll()
+                .pathMatchers("/api", "/login/**", "/authorize/**", "/webjars/swagger-ui/**", "/v3/api-docs/**", "/api/signup", "/api/signin").permitAll()
                 .pathMatchers("/admin/**").hasRole("ADMIN")
                 .anyExchange().authenticated()
                 .and().build();
@@ -76,10 +78,4 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-    }
-
 }

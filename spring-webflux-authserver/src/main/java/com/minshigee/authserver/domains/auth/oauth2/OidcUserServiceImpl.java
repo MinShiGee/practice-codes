@@ -17,7 +17,7 @@ public class OidcUserServiceImpl implements ReactiveOAuth2UserService<OidcUserRe
     @Override
     public Mono<OidcUser> loadUser(OidcUserRequest userRequest) throws OAuth2AuthenticationException {
         return delegate.loadUser(userRequest).doOnNext(user -> {
-            if(!"GOOGLE".equals(userRequest.getClientRegistration().getRegistrationId()))
+            if(!"GOOGLE".equalsIgnoreCase(userRequest.getClientRegistration().getRegistrationId()))
                 throw ErrorCode.NO_AVAILABLE_PROVIDER_LOGIN.build();
         });
     }
