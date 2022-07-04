@@ -1,9 +1,12 @@
 package com.minshigee.authserver.domains.auth.resolvers;
 
+import com.minshigee.authserver.dependencies.exception.ErrorCode;
 import com.minshigee.authserver.domains.auth.entities.LoginInfo;
+import com.minshigee.authserver.domains.auth.interfaces.AuthRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -17,6 +20,7 @@ import java.security.Key;
 import java.util.*;
 
 @Component
+@RequiredArgsConstructor
 public class JwtResolver {
 
     @Value("${spring.project.jjwt.secretkey}")
@@ -29,6 +33,8 @@ public class JwtResolver {
     private String serviceDomains;
     private Key key;
 
+    final AuthRepository authRepository;
+
     @PostConstruct
     public void initialize() {
         this.key = Keys.hmacShaKeyFor(secretKey.getBytes());
@@ -38,7 +44,7 @@ public class JwtResolver {
         return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
     }
 
-    public Long getUserCodeFromToken(String token) {
+    public Long getAuthIDFromToken(String token) {
         return Long.parseLong(getAllClaimsFromToken(token).getSubject());
     }
 
@@ -87,25 +93,18 @@ public class JwtResolver {
 
     public String resolveToken(ServerHttpRequest request) {
         Assert.notNull(request.getCookies().getFirst(tokenName), "accesstoken Cookie가 비었습니다.");
-        return request.getCookies().getFirst(tokenName).getValue();
+        return Objects.requireNonNull(request.getCookies().getFirst(tokenName)).getValue();
     }
 
     public Authentication getAuthentication(String token) {
-       /* CustomAuthentication authentication = new CustomAuthentication(
-                getUserCodeFromToken(token),
-                getAllClaimsFromToken(token),
-                token
-        );
-        authentication.setIsAuthenticated(validateToken(token));
-
-        return authentication;*/
+        final Long id = getAuthIDFromToken(token);
         return null;
     }
 
     public Boolean isAppropriateRequestForFilter(ServerHttpRequest request) {
         if(!request.getCookies().containsKey(tokenName))
             return false;
-        String token = request.getCookies().getFirst(tokenName).getValue();
+        String token = Objects.requireNonNull(request.getCookies().getFirst(tokenName)).getValue();
         return validateToken(token);
     }
 
